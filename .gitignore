@@ -21,5 +21,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
+.coverage
+
 # Firebase config
 src/firebaseConfig.js
