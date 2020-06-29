@@ -3,8 +3,10 @@
     <Navbar />
     <div id="app">
       <div v-if="columns" id="scrolling-wrapper">
-          <TurnsColumn v-for="(column, index) in columns" :key="`data-${index}`" class="col-container"
-            :dataRef="column.dataRef" />
+        <TurnsColumn
+          v-for="(column, index) in columns" :key="`data-${index}`" class="col-container"
+          :data-ref="column.dataRef"
+        />
       </div>
     </div>
   </div>
