@@ -1,12 +1,5 @@
 <template>
   <div id="app" class="container">
-    <div class="alert alert-danger alert-dismissible fade" role="alert" v-bind:class="{ show: errorMessage }">
-      <strong>Holy arepa!</strong> {{errorMessage}}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
     <div v-if="columns" class="row">
       <div v-for="(column, index) in columns" :key="`data-${index}`" class="col-sm">
         <TurnsColumn :dataRef="column.dataRef" />
@@ -18,7 +11,7 @@
 <script>
 import Firebase from 'firebase'
 import firebaseConfig from './firebaseConfig'
-import TurnsColumn from './components/TurnsColumn'
+import TurnsColumn from '@/components/TurnsColumn'
 
 const firebaseApp = Firebase.initializeApp(firebaseConfig)
 const db = firebaseApp.database()
@@ -30,9 +23,11 @@ export default {
     return { columns: [], errorMessage: undefined }
   },
   created () {
-    collection.on('value',
+    // Read remote data
+    collection.once('value',
       snapshot => {
         if (snapshot.val() && snapshot.val().columns) {
+          // Setup columns and pass column data references
           const newColumns = []
           snapshot.val().columns.forEach((data, index) => {
             const dataRef = db.ref(`data/columns/${index}`)
@@ -42,6 +37,7 @@ export default {
         }
       },
       error => {
+        // TODO: Show error on UI
         this.errorMessage = error
       }
     )
