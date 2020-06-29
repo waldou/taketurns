@@ -1,5 +1,5 @@
 <template>
-  <div class="contributor d-flex flex-row order rounded clearfix" v-bind:class="{ 'clickable': first }" v-on:click="onClick" >
+  <div class="contributor d-flex flex-row order rounded shadow-sm clearfix" v-bind:class="{ 'clickable': first }" v-on:click="onClick" >
     <div class="name">{{name}}</div>
     <div class="skip">
       <svg v-if="first" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-skip-forward-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

@@ -1,8 +1,10 @@
 <template>
-  <div id="app" class="container">
-    <div v-if="columns" class="row">
-      <div v-for="(column, index) in columns" :key="`data-${index}`" class="col-sm">
-        <TurnsColumn :dataRef="column.dataRef" />
+  <div id="app-container">
+    <Navbar />
+    <div id="app">
+      <div v-if="columns" id="scrolling-wrapper">
+          <TurnsColumn v-for="(column, index) in columns" :key="`data-${index}`" class="col-container"
+            :dataRef="column.dataRef" />
       </div>
     </div>
   </div>
@@ -11,6 +13,7 @@
 <script>
 import Firebase from 'firebase'
 import firebaseConfig from './firebaseConfig'
+import Navbar from '@/components/Navbar'
 import TurnsColumn from '@/components/TurnsColumn'
 
 const firebaseApp = Firebase.initializeApp(firebaseConfig)
@@ -24,7 +27,7 @@ export default {
   },
   created () {
     // Read remote data
-    collection.once('value',
+    collection.on('value',
       snapshot => {
         if (snapshot.val() && snapshot.val().columns) {
           // Setup columns and pass column data references
@@ -43,14 +46,28 @@ export default {
     )
   },
   components: {
+    Navbar,
     TurnsColumn
   }
 }
 </script>
 
 <style lang="scss">
+html {
+  height: 100vh;
+  margin: 0;
+  background-color: #BDB8AD;
+}
+
 body {
-  background-color: #FFFFFF;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background-color: #FFFFFF;
+    overflow-y: hidden;
+}
+#app-container {
+  height: 100%;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -58,6 +75,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #44749D;
+  width: 100%;
+  height: 100%;
+}
+#scrolling-wrapper {
+  width: auto;
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  .col-container {
+    width: 360px;
+    display: inline-block;
+    vertical-align: top;
+  }
 }
 .clickable {
   cursor: pointer;
