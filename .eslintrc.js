@@ -28,6 +28,7 @@ module.exports = {
       'no-trailing-spaces': [ 'error' ],
       'no-inline-comments': [ 'error' ],
       'no-duplicate-imports': [ 'error' ],
+      'vue/html-closing-bracket-newline': ['error', { 'singleline': 'never', 'multiline': 'never' }]
     },
     overrides: [
       {
@@ -41,7 +42,7 @@ module.exports = {
             'singleline': 5,
             'multiline': {
               'max': 5,
-              'allowFirstLine': false
+              'allowFirstLine': true
             }
           } ]
         }
