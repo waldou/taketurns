@@ -6,6 +6,7 @@
         <TurnsColumn
           v-for="(column, index) in columns" :key="`data-${index}`" class="col-container"
           :data-ref="column.dataRef" />
+        <AddColumn class="col-container" />
       </div>
     </div>
   </div>
@@ -16,6 +17,7 @@ import Firebase from 'firebase'
 import firebaseConfig from './firebaseConfig'
 import Navbar from '@/components/Navbar'
 import TurnsColumn from '@/components/TurnsColumn'
+import AddColumn from '@/components/AddColumn'
 
 const firebaseApp = Firebase.initializeApp(firebaseConfig)
 const db = firebaseApp.database()
@@ -48,7 +50,8 @@ export default {
   },
   components: {
     Navbar,
-    TurnsColumn
+    TurnsColumn,
+    AddColumn
   }
 }
 </script>
@@ -61,11 +64,10 @@ html {
 }
 
 body {
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    background-color: #FFFFFF;
-    overflow-y: hidden;
+  height: 100vh;
+  margin: 0;
+  background-color: #FFFFFF;
+  overflow-y: hidden;
 }
 #app-container {
   height: 100%;
@@ -78,6 +80,7 @@ body {
   color: #44749D;
   width: 100%;
   height: 100%;
+  z-index: 1;
 }
 #scrolling-wrapper {
   width: auto;
