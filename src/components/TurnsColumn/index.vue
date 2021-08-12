@@ -18,6 +18,11 @@
         </ul>
       </div>
     </div>
+    <div class="column-last-updated">
+      <p v-if="lastupdated">
+        Last updated: {{ lastupdated }}
+      </p>
+    </div>
     <div v-for="(contributor, index) in contributors" :key="`${contributor.name}`">
       <Contributor :name="contributor.name" :first="index === 0" :on-click-handler="contributor.onClickHandler" />
     </div>
@@ -26,6 +31,9 @@
 
 <script>
 import Contributor from './components/Contributor'
+import moment from 'moment'
+
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 export default {
   name: 'TurnsColumn',
@@ -36,7 +44,7 @@ export default {
     Contributor
   },
   data () {
-    return { name: '', contributors: []}
+    return { name: '', contributors: [], lastupdated: '' }
   },
   created () {
     // Listen to changes to column values
@@ -58,6 +66,9 @@ export default {
             newContributors.push({ name, onClickHandler })
           })
           this.contributors = newContributors
+
+          // Update column last updated date
+          this.lastupdated = snapshot.val().lastupdated
         }
       }
     )
@@ -76,7 +87,7 @@ export default {
             const newContributors = [ ...actualContributors ]
             const elem = newContributors.shift()
             newContributors.push(elem)
-            return { ...t, contributors: newContributors }
+            return { ...t, contributors: newContributors, lastupdated: moment().format(DATE_FORMAT) }
           }
         })
       } catch (e) {
@@ -111,6 +122,9 @@ export default {
 .column-top {
   border-bottom: 1px solid #BDB8AD;
   margin: 10px;
+}
+.column-last-updated {
+  width: 100%;
 }
 .column-name {
   float: left;
